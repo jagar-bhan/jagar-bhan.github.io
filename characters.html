@@ -16,7 +16,7 @@
           <li><a href="characters.html">Characters</a></li>
           <li><a href="cars.html">Cars</a></li>
           <li><a href="moments.html">Moments</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="posters.html">Posters</a></li>
         </ul>
       </nav>
     </div>
@@ -105,6 +105,87 @@
     
   
   </main>
-  
+  <script>
+    (function () {
+      const audio = document.getElementById('bgm');
+      const btn = document.getElementById('musicToggle');
+    
+      if (!audio || !btn) return;
+    
+      const LS_PLAYING = 'bgm.playing';
+      const LS_TIME    = 'bgm.time';
+      const LS_VOL     = 'bgm.volume';
+    
+      // Restore volume (default 0.5)
+      const savedVol = +localStorage.getItem(LS_VOL);
+      audio.volume = Number.isFinite(savedVol) ? Math.min(Math.max(savedVol, 0), 1) : 0.5;
+    
+      // Restore time
+      const savedTime = +localStorage.getItem(LS_TIME);
+      if (Number.isFinite(savedTime) && savedTime > 0) {
+        audio.currentTime = savedTime;
+      }
+    
+      // Restore playing state
+      const wasPlaying = localStorage.getItem(LS_PLAYING) === 'true';
+    
+      // Update button UI
+      function reflect(isPlaying) {
+        btn.setAttribute('aria-pressed', String(isPlaying));
+        btn.textContent = isPlaying ? '⏸️ Music' : '🔊 Music';
+      }
+    
+      reflect(wasPlaying);
+    
+      // Try autoplay if previously playing (may be blocked until interaction)
+      if (wasPlaying) {
+        audio.play().then(() => reflect(true)).catch(() => {
+          // Autoplay blocked: wait for first user interaction
+          reflect(false);
+        });
+      }
+    
+      // Toggle on click (this user gesture will allow playback)
+      btn.addEventListener('click', async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            reflect(true);
+            localStorage.setItem(LS_PLAYING, 'true');
+          } catch (e) {
+            // Still blocked? quietly ignore
+          }
+        } else {
+          audio.pause();
+          reflect(false);
+          localStorage.setItem(LS_PLAYING, 'false');
+        }
+      });
+    
+      // Save progress periodically and on exit
+      const saveTime = () => localStorage.setItem(LS_TIME, String(Math.floor(audio.currentTime)));
+      let t = setInterval(saveTime, 2000);
+      window.addEventListener('beforeunload', saveTime);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) saveTime(); });
+    
+      // Optional: keyboard quick controls
+      window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'm') btn.click(); // M = toggle
+        if (e.key === '+' || e.key === '=') { // volume up
+          audio.volume = Math.min(1, (audio.volume + 0.05).toFixed(2));
+          localStorage.setItem(LS_VOL, String(audio.volume));
+        }
+        if (e.key === '-' || e.key === '_') { // volume down
+          audio.volume = Math.max(0, (audio.volume - 0.05).toFixed(2));
+          localStorage.setItem(LS_VOL, String(audio.volume));
+        }
+      });
+    
+      // Persist volume changes if you add a UI later
+      audio.addEventListener('volumechange', () => {
+        localStorage.setItem(LS_VOL, String(audio.volume));
+      });
+    })();
+    </script>    
 </body>
 </html>
