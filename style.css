@@ -138,6 +138,7 @@ nav a:hover{
   border:1px solid rgba(255,255,255,.08);
   box-shadow: var(--shadow);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  text-decoration: none;
 }
 .card img{
   width:100%;
@@ -167,12 +168,15 @@ nav a:hover{
 }
 
 .card p{
-  margin:0; padding:12px 14px 14px;
-  font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  margin:0;
+  padding:12px 14px 14px;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
   color:var(--text);
   border-top:1px solid rgba(255,255,255,.06);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  text-decoration: none;
 }
 
 /* CHARACTERS */
