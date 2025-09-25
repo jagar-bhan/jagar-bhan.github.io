@@ -352,9 +352,3 @@ nav a:hover{
   box-shadow: var(--shadow);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-
-.posters img:hover{
-  transform: translateY(-3px) scale(1.02);
-  border-color: var(--nitrous);
-  box-shadow: 0 16px 40px rgba(0,229,255,.18);
-}
