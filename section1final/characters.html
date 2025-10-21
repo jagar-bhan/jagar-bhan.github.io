@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fast Saga · Characters</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <audio autoplay>
+    <source src="audio/six-days.mp3" type="audio/mpeg">
+  </audio>
+
+  <header>
+    <div class="bar">
+      <div class="logo">
+        <span class="webring">
+          <a href="https://codeshaunted.com/artoftheweb/s1fp" class="webring">
+            <div class="webringlink">
+              <img src="images/weblink.jpg" alt="Web Ring Link">
+            </div>
+          </a>
+        </span>
+        <span>The Fast Saga</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="characters.html">Characters</a></li>
+          <li><a href="cars.html">Cars</a></li>
+          <li><a href="moments.html">Moments</a></li>
+          <li><a href="posters.html">Posters</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-container">
+
+    <article class="character">
+      <span class="badge">Leader</span>
+      <img src="images/dom.jpg" alt="Dom Toretto" />
+      <h2>Dom Toretto</h2>
+      <p>The main character. All about family.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Driver</span>
+      <img src="images/brian.jpg" alt="Brian O'Conner" />
+      <h2>Brian O'Conner</h2>
+      <p>The undercover cop turned family man.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Ride or Die</span>
+      <img src="images/letty.jpg" alt="Letty Ortiz" />
+      <h2>Letty Ortiz</h2>
+      <p>Fearless driver and Dom's partner in crime.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Brains</span>
+      <img src="images/tej.jpg" alt="Tej Parker" />
+      <h2>Tej Parker</h2>
+      <p>Tech genius and mechanic with a knack for hacking.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Comic Relief</span>
+      <img src="images/roman.jpg" alt="Roman Pearce" />
+      <h2>Roman Pearce</h2>
+      <p>Loud, funny, and always talking his way out of trouble.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Drifter</span>
+      <img src="images/han.jpg" alt="Han Lue" />
+      <h2>Han Lue</h2>
+      <p>Cool, calm, and collected. Forever snacking while plotting his next move.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Drift King</span>
+      <img src="images/sean.jpg" alt="Sean Boswell" />
+      <h2>Sean Boswell</h2>
+      <p>The American racer who became the Drift King of Tokyo after defeating Takashi.</p>
+    </article>
+
+    <article class="character">
+      <span class="badge">Agent</span>
+      <img src="images/hobbs.jpg" alt="Luke Hobbs" />
+      <h2>Luke Hobbs</h2>
+      <p>DSS agent with unmatched strength, eventually an ally to the family.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Wildcard</span>
+      <img src="images/shaw.jpg" alt="Deckard Shaw" />
+      <h2>Deckard Shaw</h2>
+      <p>Former foe turned reluctant ally. Deadly, calculating, and stylish.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Support</span>
+      <img src="images/mia.jpg" alt="Mia Toretto" />
+      <h2>Mia Toretto</h2>
+      <p>Dom's sister and Brian's partner, the emotional heart of the family.</p>
+    </article>
+  
+    <article class="character">
+      <span class="badge">Enforcer</span>
+      <img src="images/gisele.jpg" alt="Gisele Yashar" />
+      <h2>Gisele Yashar</h2>
+      <p>Former Mossad agent with deadly skill, and Han's great love.</p>
+    </article>
+
+    
+    
+  
+  </main>
+  <script>
+    (function () {
+      const audio = document.getElementById('bgm');
+      const btn = document.getElementById('musicToggle');
+    
+      if (!audio || !btn) return;
+    
+      const LS_PLAYING = 'bgm.playing';
+      const LS_TIME    = 'bgm.time';
+      const LS_VOL     = 'bgm.volume';
+    
+      // Restore volume (default 0.5)
+      const savedVol = +localStorage.getItem(LS_VOL);
+      audio.volume = Number.isFinite(savedVol) ? Math.min(Math.max(savedVol, 0), 1) : 0.5;
+    
+      // Restore time
+      const savedTime = +localStorage.getItem(LS_TIME);
+      if (Number.isFinite(savedTime) && savedTime > 0) {
+        audio.currentTime = savedTime;
+      }
+    
+      // Restore playing state
+      const wasPlaying = localStorage.getItem(LS_PLAYING) === 'true';
+    
+      // Update button UI
+      function reflect(isPlaying) {
+        btn.setAttribute('aria-pressed', String(isPlaying));
+        btn.textContent = isPlaying ? '⏸️ Music' : '🔊 Music';
+      }
+    
+      reflect(wasPlaying);
+    
+      // Try autoplay if previously playing (may be blocked until interaction)
+      if (wasPlaying) {
+        audio.play().then(() => reflect(true)).catch(() => {
+          // Autoplay blocked: wait for first user interaction
+          reflect(false);
+        });
+      }
+    
+      // Toggle on click (this user gesture will allow playback)
+      btn.addEventListener('click', async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            reflect(true);
+            localStorage.setItem(LS_PLAYING, 'true');
+          } catch (e) {
+            // Still blocked? quietly ignore
+          }
+        } else {
+          audio.pause();
+          reflect(false);
+          localStorage.setItem(LS_PLAYING, 'false');
+        }
+      });
+    
+      // Save progress periodically and on exit
+      const saveTime = () => localStorage.setItem(LS_TIME, String(Math.floor(audio.currentTime)));
+      let t = setInterval(saveTime, 2000);
+      window.addEventListener('beforeunload', saveTime);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) saveTime(); });
+    
+      // Optional: keyboard quick controls
+      window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'm') btn.click(); // M = toggle
+        if (e.key === '+' || e.key === '=') { // volume up
+          audio.volume = Math.min(1, (audio.volume + 0.05).toFixed(2));
+          localStorage.setItem(LS_VOL, String(audio.volume));
+        }
+        if (e.key === '-' || e.key === '_') { // volume down
+          audio.volume = Math.max(0, (audio.volume - 0.05).toFixed(2));
+          localStorage.setItem(LS_VOL, String(audio.volume));
+        }
+      });
+    
+      // Persist volume changes if you add a UI later
+      audio.addEventListener('volumechange', () => {
+        localStorage.setItem(LS_VOL, String(audio.volume));
+      });
+    })();
+    </script>    
+</body>
+</html>

@@ -1,0 +1,281 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:linear-gradient(180deg,#87ceeb 0%,#e0f6ff 100%);
+    min-height:100vh;
+    color:#111;
+}
+
+.container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:3rem 1.5rem;
+}
+
+header{
+    text-align:center;
+    margin-bottom:3rem;
+}
+
+h1{
+    font-size:3rem;
+    font-weight:200;
+    letter-spacing:4px;
+    color:#fff;
+    text-shadow:2px 2px 4px rgba(0,0,0,.12);
+}
+
+.tagline{
+    font-size:1rem;
+    color:rgba(255,255,255,.9);
+    letter-spacing:2px;
+    margin-top:.5rem;
+}
+
+.sky{
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:3rem 4rem;
+}
+
+.cloud{
+  border:none;
+  outline:none;
+  position:relative;
+  width:260px;
+  height:140px;
+  background:#fff;
+  border-radius:100px;
+  box-shadow:-60px 15px 0 -20px #fff, 60px 15px 0 -20px #fff, 0 -28px 0 -10px #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.cloud:hover{
+    transform:scale(1.05);
+    box-shadow:-60px 15px 0 -20px #fff, 60px 15px 0 -20px #fff, 0 -28px 0 -10px #fff, 0 10px 20px rgba(0,0,0,.18);
+}
+
+.cloud-1{
+    animation:float1 9s ease-in-out infinite alternate;
+    animation-delay:-1s;
+}
+.cloud-2{
+    animation:float2 11s ease-in-out infinite alternate;
+    animation-delay:-2.5s;
+}
+.cloud-3{
+    animation:float3 10s ease-in-out infinite alternate;
+    animation-delay:-3.7s;
+}
+.cloud-4{
+    animation:float4 12s ease-in-out infinite alternate;
+    animation-delay:-.8s;
+}
+.cloud-5{
+    animation:float5 8s ease-in-out infinite alternate;
+    animation-delay:-4.2s;
+}
+
+@keyframes float1{ 0%,100%{transform:translate(0,0)} 50%{transform:translate(12px,-18px)} }
+@keyframes float2{ 0%,100%{transform:translate(-6px,4px)} 50%{transform:translate(10px,-22px)} }
+@keyframes float3{ 0%,100%{transform:translate(6px,-2px)} 50%{transform:translate(-12px,14px)} }
+@keyframes float4{ 0%,100%{transform:translate(4px,2px)} 50%{transform:translate(-10px,-16px)} }
+@keyframes float5{ 0%,100%{transform:translate(-3px,3px)} 50%{transform:translate(8px,-20px)} }
+
+.album-cover{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border:3px solid #fff;
+  border-radius:10px;
+  box-shadow:0 6px 16px rgba(0,0,0,.22);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.cloud:hover .album-cover{
+    transform:scale(1.08);
+    box-shadow:0 10px 24px rgba(0,0,0,.28);
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.42);
+    opacity:0;
+    transition:opacity .3s ease; z-index:150;
+    pointer-events:none;
+}
+#overlay.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.info-panel{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.9);
+  opacity:0;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:2rem 2.5rem;
+  width:92%;
+  max-width:650px;
+  max-height:80vh;
+  overflow:auto;
+  box-shadow:0 22px 44px rgba(0,0,0,.28);
+  transition:opacity .3s ease, transform .3s ease;
+  z-index:200;
+  pointer-events:none;
+}
+.info-panel.active{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+    pointer-events:auto;
+}
+
+.close-btn{
+    position:absolute;
+    top:10px;
+    right:12px;
+    background:none;
+    border:0;
+    font-size:1.8rem;
+    cursor:pointer;
+    color:#555;
+    transition:transform .25s ease,color .25s ease;
+}
+.close-btn:hover{
+    color:#111;
+    transform:rotate(90deg);
+}
+
+.album-title{
+    font-size:1.6rem;
+    font-weight:700;
+    margin-bottom:.1rem;
+}
+.artist-name{
+    font-size:1rem;
+    color:#666;
+    margin-bottom:.5rem;
+}
+.song-title{
+    font-weight:600;
+    color:#333;
+    margin-bottom:.75rem;
+}
+
+.player{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:.75rem;
+    margin:.25rem 0 1rem;
+}
+.play-btn{
+    appearance:none;
+    border:0;
+    background:#111;
+    color:#fff;
+    font-size:.9rem;
+    padding:.55rem .9rem;
+    border-radius:999px;
+    cursor:pointer;
+}
+.time{
+    font-size:.85rem;
+    color:#444;
+    min-width:60px;
+    text-align:right;
+}
+.seek{
+    appearance:none;
+    width:100%;
+    height:6px;
+    border-radius:999px;
+    background:rgba(0,0,0,.1);
+    outline:none;
+}
+.seek::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:14px;
+    height:14px;
+    border-radius:50%; 
+    background:#111;
+}
+
+.lyrics{
+  position:relative;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  white-space:pre-wrap; background:rgba(240,240,240,.7);
+  border-radius:12px;
+  padding:1rem;
+  line-height:1.55;
+  max-height:40vh;
+  overflow-y:auto;
+  border:1px solid rgba(0,0,0,.06);
+  scroll-behavior:smooth;
+  scroll-padding-top: 80px;
+  scroll-padding-bottom: 80px;
+}
+
+.lyrics::before, .lyrics::after{
+  content:"";
+  position:sticky;
+  left:0;
+  right:0;
+  height:32px;
+  pointer-events:none;
+  z-index:1;
+}
+.lyrics::before{
+    top:0;
+    background:linear-gradient(#f0f0f0, transparent);
+    border-top-left-radius:12px;
+    border-top-right-radius:12px;
+}
+.lyrics::after {
+    bottom:0;
+    background:linear-gradient(transparent, #f0f0f0);
+    border-bottom-left-radius:12px;
+    border-bottom-right-radius:12px;
+}
+
+.lyrics .loading{
+    color:#666;
+    font-style:italic;
+}
+.lyrics .error{
+    color:#b00020;
+    font-weight:600;
+}
+
+.lyric-line{
+  position:relative;
+  padding:.15rem 0;
+  transition:color .2s ease, background .2s ease;
+  cursor:pointer;
+}
+.lyric-line:hover{
+    background:rgba(0,0,0,.08); }
+.lyric-line.active{
+    background:rgba(0,0,0,.05);
+    color:#000;
+    border-radius:6px;
+}
+
+.lyric-spacer{
+    height:0;
+}
