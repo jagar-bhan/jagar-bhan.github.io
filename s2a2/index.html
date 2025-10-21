@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>sound cloud</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Dim background when panel is open -->
+  <div id="overlay" aria-hidden="true"></div>
+
+  <div class="container">
+    <header>
+      <h1>sound cloud</h1>
+      <p class="tagline">music floating in the atmosphere</p>
+    </header>
+
+    <!-- Clouds with albums -->
+    <main class="sky" aria-label="Album clouds">
+      <button class="cloud cloud-1" data-album="1">
+        <img class="album-cover" src="covers/lungs.jpg" alt="Lungs — album cover"/>
+      </button>
+
+      <button class="cloud cloud-2" data-album="2">
+        <img class="album-cover" src="covers/letigre.jpg" alt="Le Tigre — album cover"/>
+      </button>
+
+      <button class="cloud cloud-3" data-album="3">
+        <img class="album-cover" src="covers/saj.jpg" alt="Songs about Jane — album cover"/>
+      </button>
+
+      <button class="cloud cloud-4" data-album="4">
+        <img class="album-cover" src="covers/currents.jpg" alt="Currents — album cover"/>
+      </button>
+
+      <button class="cloud cloud-5" data-album="5">
+        <img class="album-cover" src="covers/isthisit.jpg" alt="Is This It — album cover"/>
+      </button>
+    </main>
+  </div>
+
+  <!-- Lyrics + now-playing panel -->
+  <aside class="info-panel" id="infoPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Now Playing and Lyrics">
+    <button class="close-btn" id="closeBtn" type="button" aria-label="Close">×</button>
+    <div class="info-content" id="infoContent"></div>
+  </aside>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
