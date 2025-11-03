@@ -2,6 +2,29 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 canvas {
   display: block;
+}
+
+#timetest {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px 8px;
+  border-radius: 6px;
+  backdrop-filter: blur(2px);
+  display: none;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+#timetest.visible {
+  display: block;
+  opacity: 1;
 }
