@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Command-Line Theater</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Cinematic interface to command a character via code-like prompts.">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="film-header">
+    <h1 class="film-title">COMMAND-LINE THEATER</h1>
+  </header>
+
+  <main class="film-layout">
+    <!-- SCREEN -->
+    <section class="screen-wrap">
+      <div class="screen" id="screen" aria-label="Cinema screen">
+        <div class="timecode"><span class="rec-dot"></span><span id="clock">00:00</span></div>
+        <div class="stage" id="stage" aria-label="Stage">
+          <div id="char" class="char" aria-label="Character" role="img">
+            <img id="charImg" alt="Character sprite"/>
+            <div id="fallback" class="fallback" aria-hidden="true">🙂</div>
+            <div id="speech" class="speech" hidden></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="screen-controls">
+        <div class="knobs">
+          <label>Interrupts
+            <input id="errorChance" type="range" min="0" max="100" value="25">
+            <span id="errorLabel">25%</span>
+          </label>
+          <label>Step
+            <input id="stepSize" type="range" min="20" max="160" value="100">
+            <span id="stepLabel">100px</span>
+          </label>
+        </div>
+        <div class="actions">
+          <button id="startBtn" class="btn primary">▶ PLAY</button>
+          <button id="endBtn" class="btn" disabled>■ STOP</button>
+          <button id="rollBtn" class="btn" disabled>🎲 INTERRUPT</button>
+        </div>
+      </footer>
+    </section>
+
+    <!-- CONSOLE -->
+    <aside class="console">
+      <div class="terminal" role="log" aria-live="polite" id="term"></div>
+
+      <form id="cmdForm" class="cmdbar" autocomplete="off">
+        <input id="cmdInput" type="text"
+               placeholder='Type a command… try print("Hello"), move("left"), pose("star")'
+               disabled>
+        <button id="runBtn" class="btn primary" disabled>Run ▶</button>
+      </form>
+
+      <div class="buttons">
+        <button data-template='print("")' class="btn">print( )</button>
+        <button data-template='emotion("")' class="btn">emotion( )</button>
+        <button data-template='pose("")' class="btn">pose( )</button>
+        <button data-template='move("")' class="btn">move( )</button>
+        <button data-template='repeat( , )' class="btn">repeat( , )</button>
+        <button data-template='wait( )' class="btn">wait( )</button>
+        <button data-cmd='clear()' class="btn">clear()</button>
+        <button data-cmd='help' class="btn ghost">help</button>
+      </div>
+
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

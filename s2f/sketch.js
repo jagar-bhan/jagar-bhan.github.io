@@ -14,8 +14,8 @@ let normalFont;
 let timeDiv;
 
 function preload() {
-  spookyFont = loadFont('Melted Monster.ttf'); // night font
-  normalFont = 'Helvetica';                    // day font
+  spookyFont = loadFont('Melted Monster.ttf');
+  normalFont = 'Helvetica';
 }
 
 function setup() {
