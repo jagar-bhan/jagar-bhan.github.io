@@ -1,40 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // open overlays
-  document.querySelectorAll("[data-open]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-open");
-      const panel = document.getElementById(id);
-      if (panel) panel.classList.add("is-open");
-    });
-  });
+  // small index menu popover
+  const menuToggle = document.querySelector(".menu-toggle");
+  const menuPopover = document.getElementById("menuPopover");
 
-  // close overlays
-  document.querySelectorAll("[data-close]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-close");
-      const panel = document.getElementById(id);
-      if (panel) panel.classList.remove("is-open");
+  if (menuToggle && menuPopover) {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menuPopover.classList.toggle("is-open");
     });
-  });
 
-  // click outside overlay to close
-  document.querySelectorAll(".overlay").forEach((ov) => {
-    ov.addEventListener("click", (e) => {
-      if (e.target === ov) ov.classList.remove("is-open");
+    // close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        menuPopover.classList.contains("is-open") &&
+        !menuPopover.contains(e.target) &&
+        !menuToggle.contains(e.target)
+      ) {
+        menuPopover.classList.remove("is-open");
+      }
     });
-  });
 
-  // nav panel closes when clicking a section
-  document
-    .querySelectorAll("#navPanel .overlay-list a")
-    .forEach((link) => {
+    // close when clicking a menu link
+    menuPopover.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
-        const panel = document.getElementById("navPanel");
-        if (panel) panel.classList.remove("is-open");
+        menuPopover.classList.remove("is-open");
       });
     });
+  }
 
-  // fade-in panels on scroll (projects + about)
+  // info popover
+  const infoToggle = document.querySelector(".info-toggle");
+  const infoPopover = document.getElementById("infoPopover");
+
+  if (infoToggle && infoPopover) {
+    const infoClose = infoPopover.querySelector(".info-close");
+
+    infoToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      infoPopover.classList.toggle("is-open");
+    });
+
+    if (infoClose) {
+      infoClose.addEventListener("click", (e) => {
+        e.stopPropagation();
+        infoPopover.classList.remove("is-open");
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (
+        infoPopover.classList.contains("is-open") &&
+        !infoPopover.contains(e.target) &&
+        !infoToggle.contains(e.target)
+      ) {
+        infoPopover.classList.remove("is-open");
+      }
+    });
+  }
+
+  // fade-in panels on scroll (projects, about)
   const panelObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
