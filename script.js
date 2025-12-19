@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // small index menu popover
+  // index menu
   const menuToggle = document.querySelector(".menu-toggle");
   const menuPopover = document.getElementById("menuPopover");
 
@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
       menuPopover.classList.toggle("is-open");
     });
 
-    // close when clicking outside
     document.addEventListener("click", (e) => {
       if (
         menuPopover.classList.contains("is-open") &&
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // close when clicking a menu link
     menuPopover.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
         menuPopover.classList.remove("is-open");
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // info popover
+  // info menu
   const infoToggle = document.querySelector(".info-toggle");
   const infoPopover = document.getElementById("infoPopover");
 
@@ -58,14 +56,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // fade-in panels on scroll (projects, about)
+  // header title appears after hero
+  const hero = document.querySelector(".hero");
+  const topTitle = document.querySelector(".top-title");
+
+  if (hero && topTitle) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            topTitle.classList.remove("is-visible");
+          } else {
+            topTitle.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    heroObserver.observe(hero);
+  }
+
+  // fade-in panels
   const panelObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-        } else {
-          entry.target.classList.remove("visible");
         }
       });
     },
@@ -76,25 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     panelObserver.observe(el);
   });
 
-  // fade-in each reading card on scroll
-  const readingObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        } else {
-          entry.target.classList.remove("visible");
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-
-  document.querySelectorAll(".reading-card").forEach((card) => {
-    readingObserver.observe(card);
-  });
-
-  // hover previews for project cards
+  // project hover previews
   document.querySelectorAll(".card").forEach((card) => {
     const previewBody = card.querySelector(".preview-body");
     if (!previewBody) return;
